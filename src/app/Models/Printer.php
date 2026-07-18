@@ -20,5 +20,9 @@ class Printer extends Model
         'brand',
         'model',
         'closed_at',
+        'state',
+        'ethernet',
+        'wifi',
+        'duplex',
     ];
 }

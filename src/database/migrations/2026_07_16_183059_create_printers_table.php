@@ -15,15 +15,26 @@ return new class extends Migration
             $table->id();
 
             $table->string('title')->nullable();
+            $table->enum('type', [
+                'printer',
+                'mfp'
+            ]);
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
             $table->integer('price')->nullable();
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
-            $table->string('state')->nullable();
+            $table->string('cartridge')->nullable(); // CF226A, TN-2375, TK-1170
+            $table->string('state')->nullable(); // Новый, почти новый и т.д.
+            $table->integer('pages_printed')->nullable();
             $table->boolean('ethernet')->nullable();
             $table->boolean('wifi')->nullable();
             $table->boolean('duplex')->nullable();
+            $table->enum('status', [
+                'available',
+                'reserved',
+                'sold'
+            ])->default('available');
             $table->timestamp('closed_at')->nullable();
             $table->softDeletes();
 

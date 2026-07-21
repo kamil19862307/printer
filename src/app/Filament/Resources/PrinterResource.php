@@ -34,7 +34,7 @@ class PrinterResource extends Resource
                     ->disk('public'),
                 Forms\Components\TextInput::make('price')
                     ->numeric()
-                    ->prefix('$'),
+                    ->label('Цена'),
                 Forms\Components\TextInput::make('brand')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('model')
@@ -49,39 +49,29 @@ class PrinterResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image_path'),
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->disk('public')
+                    ->label('Фото'),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
-                    ->sortable(),
+                    ->money('RUB', locale: 'ru')
+                    ->sortable()
+                    ->label('Цена'),
                 Tables\Columns\TextColumn::make('brand')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Бренд'),
                 Tables\Columns\TextColumn::make('model')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Модель'),
                 Tables\Columns\TextColumn::make('state')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('closed_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable()
+                    ->label('Состояние'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

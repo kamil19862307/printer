@@ -2,6 +2,8 @@
 import {
     WifiIcon,
     EllipsisHorizontalIcon,
+    CpuChipIcon,
+    ServerIcon,
 } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -9,6 +11,11 @@ const props = defineProps({
 })
 
 const items = [
+    {
+        visible: props.printer.usb,
+        icon: CpuChipIcon,
+        label: 'USB',
+    },
     {
         visible: props.printer.wifi,
         icon: WifiIcon,
@@ -21,7 +28,7 @@ const items = [
     },
     {
         visible: props.printer.ethernet,
-        icon: EllipsisHorizontalIcon,
+        icon: ServerIcon,
         label: 'Сетевой разъём',
     },
 ]

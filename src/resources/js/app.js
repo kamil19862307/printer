@@ -6,6 +6,10 @@ import { createInertiaApp } from '@inertiajs/vue3';
 
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
+import 'swiper/css'
+
+import 'swiper/css/pagination'
+
 createInertiaApp({
 
     resolve: (name) =>

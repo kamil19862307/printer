@@ -8,7 +8,7 @@ export default [
 
         title: 'HP LaserJet P1102',
 
-        state: 'refurbished',
+        state: 'like_new',
 
         price: '12 990',
 
@@ -36,7 +36,7 @@ export default [
 
         title: 'HP LaserJet P1102',
 
-        state: 'refurbished',
+        state: 'new',
 
         price: '12 990',
 
@@ -64,7 +64,7 @@ export default [
 
         title: 'HP LaserJet P1102',
 
-        state: 'refurbished',
+        state: 'good',
 
         price: '12 990',
 

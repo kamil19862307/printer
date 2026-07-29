@@ -1,9 +1,9 @@
 <script setup>
 import {
     WifiIcon,
-    EllipsisHorizontalIcon,
+    ArrowsRightLeftIcon,
     CpuChipIcon,
-    ServerIcon,
+    GlobeAltIcon,
 } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -23,24 +23,33 @@ const items = [
     },
     {
         visible: props.printer.duplex,
-        icon: EllipsisHorizontalIcon,
-        label: 'Двусторонняя печать',
+        icon: ArrowsRightLeftIcon,
+        label: 'Дуплекс',
     },
     {
         visible: props.printer.ethernet,
-        icon: ServerIcon,
-        label: 'Сетевой разъём',
+        icon: GlobeAltIcon,
+        label: 'Сеть',
     },
 ]
 </script>
 
 <template>
-    <div class="grid grid-cols-2 gap-3">
+    <div class="flex flex-wrap gap-2">
 
         <div
             v-for="item in items.filter(i => i.visible)"
             :key="item.label"
-            class="flex items-center gap-3 rounded-2xl border border-gray-200 p-4"
+            class="
+                inline-flex
+                items-center
+                gap-2
+                rounded-xl
+                border
+                border-gray-200
+                bg-gray-50
+                px-3
+                py-2"
         >
             <component
                 :is="item.icon"
@@ -48,7 +57,7 @@ const items = [
             />
 
             <span
-                class="text-sm font-medium"
+                class="text-[13px] font-medium"
             >
                 {{ item.label }}
             </span>

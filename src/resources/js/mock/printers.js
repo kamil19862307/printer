@@ -8,7 +8,7 @@ export default [
 
         title: 'HP LaserJet P1102',
 
-        description: 'sdf asdf asdf sdafja;lsdkfja;lskd jasdlkfjpiskljs',
+        description: 'Лазерный принтер HP LaserJet P1102. Полностью обслужен. Установлен новый картридж. Готов к работе.',
 
         state: 'like_new',
 

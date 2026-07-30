@@ -6,6 +6,7 @@ import MobileLayout from '@/Components/Layout/MobileLayout.vue'
 import PrinterGallery from '@/Components/Printer/PrinterGallery.vue'
 import PrinterFeatures from '@/Components/Printer/PrinterFeatures.vue'
 import StateBadge from '@/Components/Printer/StateBadge.vue'
+import BackBar from '@/Components/Layout/BackBar.vue'
 
 import printers from '@/mock/printers'
 
@@ -21,6 +22,8 @@ const printer = computed(() => {
 <template>
     <MobileLayout>
 
+        <BackBar />
+
         <div
             v-if="printer"
             class="pb-10"
@@ -29,7 +32,7 @@ const printer = computed(() => {
                 :images="printer.images"
             />
 
-            <div class="space-y-5 p-5">
+            <div class="space-y-6 px-5 pb-8 pt-6">
 
                 <h1
                     class="text-3xl font-bold text-gray-900"
@@ -51,7 +54,7 @@ const printer = computed(() => {
                     :printer="printer"
                 />
 
-                <div class="pt-4">
+                <div class="rounded-2xl bg-slate-50 p-4">
                     <h2 class="mb-2 text-lg font-semibold">
                         Описание
                     </h2>
@@ -66,4 +69,5 @@ const printer = computed(() => {
         </div>
 
     </MobileLayout>
+
 </template>

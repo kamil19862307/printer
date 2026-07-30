@@ -8,6 +8,8 @@ export default [
 
         title: 'HP LaserJet P1102',
 
+        description: 'sdf asdf asdf sdafja;lsdkfja;lskd jasdlkfjpiskljs',
+
         state: 'like_new',
 
         price: '12 990',
@@ -36,6 +38,8 @@ export default [
 
         title: 'HP LaserJet P1102',
 
+        description: 'Molestiae nulla volu',
+
         state: 'new',
 
         price: '12 990',
@@ -63,6 +67,8 @@ export default [
         model: 'LaserJet P1102',
 
         title: 'HP LaserJet P1102',
+
+        description: 'Molestiae nulla voluMolestiae nulla voluMolestiae nulla voluMolestiae nulla volu',
 
         state: 'good',
 

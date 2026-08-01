@@ -42,7 +42,7 @@ defineProps({
                                 {{ printer.title }}
                             </h2>
 
-                            <div class="mt-2">
+                            <div class="mt-4">
                                 <StateBadge :state="printer.state" />
                             </div>
                         </div>

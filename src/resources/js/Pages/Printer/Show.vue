@@ -22,7 +22,9 @@ const printer = computed(() => {
 <template>
     <MobileLayout>
 
-        <BackBar />
+        <BackBar
+            :title="printer.title"
+        />
 
         <div
             v-if="printer"
@@ -32,22 +34,33 @@ const printer = computed(() => {
                 :images="printer.images"
             />
 
-            <div class="space-y-6 px-5 pb-8 pt-6">
+            <div class="space-y-12 px-10 pb-8 pt-6">
 
-                <h1
-                    class="text-3xl font-bold text-gray-900"
-                >
-                    {{ printer.title }}
-                </h1>
+                <div class="flex items-start justify-between gap-4">
 
-                <StateBadge
-                    :state="printer.state"
-                />
+                    <div>
+                        <h1 class="text-3xl font-bold">
+                            {{ printer.title }}
+                        </h1>
 
-                <div
-                    class="text-3xl font-bold text-blue-600"
-                >
-                    {{ printer.price }} ₽
+                        <div class="mt-4">
+                            <StateBadge :state="printer.state" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-end">
+                        <div class="text-3xl font-bold text-blue-600">
+                            {{ printer.price }} ₽
+                        </div>
+
+<!--                        #TODO сделать возможность бронирования аппрата для аутентифицированных пользователей -->
+<!--                        <button-->
+<!--                            class="mt-5 rounded-xl bg-blue-600 px-5 py-3 text-m font-semibold text-white transition hover:bg-blue-700"-->
+<!--                        >-->
+<!--                            Забронировать-->
+<!--                        </button>-->
+                    </div>
+
                 </div>
 
                 <PrinterFeatures

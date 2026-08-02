@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('printer_images', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('printer_id');
+            $table->foreignId('printer_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->string('image_path')->nullable();
-            $table->string('sort')->nullable();
+            $table->unsignedTinyInteger('sort')->nullable();
 
             $table->timestamps();
         });

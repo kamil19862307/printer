@@ -1,14 +1,12 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PrinterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
-Route::get('/printers/{printer}', function ($printer) {
-    return Inertia::render('Printer/Show', [
-        'printerId' => $printer,
-    ]);
-})->name('printers.show');
+Route::get('/printers/{printer}', [PrinterController::class, 'show'])
+    ->name('printers.show');

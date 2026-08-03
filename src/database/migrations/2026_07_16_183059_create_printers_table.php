@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PrinterBrands;
 use App\Enums\PrinterState;
 use App\Enums\PrinterStatus;
 use App\Enums\PrinterType;
@@ -20,17 +21,14 @@ return new class extends Migration
             $table->enum('type', array_column(PrinterType::cases(), 'value'));
             $table->text('description')
                 ->nullable();
-            $table->integer('price')
-                ->nullable();
-            $table->string('brand')
-                ->nullable();
-            $table->string('model')
-                ->nullable();
-            $table->string('cartridge')
-                ->nullable(); // CF226A, TN-2375, TK-1170
-            $table->enum('state', array_column(PrinterState::cases(), 'value'))
-                ->nullable();
+            $table->integer('price');
+            $table->enum('brand', array_column(PrinterBrands::cases(), 'value'));
+            $table->string('model');
+            $table->string('cartridge'); // CF226A, TN-2375, TK-1170
+            $table->enum('state', array_column(PrinterState::cases(), 'value'));
             $table->unsignedInteger('pages_printed')
+                ->nullable();
+            $table->boolean('usb')
                 ->nullable();
             $table->boolean('ethernet')
                 ->nullable();

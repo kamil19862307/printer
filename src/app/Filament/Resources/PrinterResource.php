@@ -2,10 +2,16 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PrinterBrands;
+use App\Enums\PrinterState;
+use App\Enums\PrinterStatus;
 use App\Filament\Resources\PrinterResource\Pages;
-use App\Filament\Resources\PrinterResource\RelationManagers;
 use App\Models\Printer;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,23 +29,62 @@ class PrinterResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image_path')
-                    ->image()
-                    ->directory('printers')
-                    ->imageEditor()
-                    ->disk('public'),
-                Forms\Components\TextInput::make('price')
-                    ->numeric()
-                    ->label('Цена'),
-                Forms\Components\TextInput::make('brand')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('model')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('state')
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('closed_at'),
+                Section::make('Основная информация')
+                    ->description('Укажите базовые параметры устройства')
+                    ->schema([
+                        Select::make('brand')
+                            ->label('Бренд')
+                            ->options(collect(PrinterBrands::cases())->mapWithKeys(fn ($case) => [
+                                $case->name => $case->value // Сохраняет value (HP), отображает текст
+                            ]))
+                            ->required()
+                            ->searchable(), // Живой поиск по брендам
+                        TextInput::make('model')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->label('Цена'),
+                        Select::make('state')
+                            ->label('Состаяние аппарата')
+                            ->options(collect(PrinterState::cases())->mapWithKeys(fn ($case) => [
+                                $case->name => $case->value // Сохраняет value (NEW), отображает текст
+                            ]))
+                            ->required(),
+                    ])->columns(2),
+
+                Section::make('Характеристики')
+                    ->description('Укажите остальные детали')
+                    ->schema([
+                        TextInput::make('cartridge')
+                            ->label('Какой картидж идёт')
+                            ->maxLength(255),
+                        Textarea::make('description')
+                            ->label('Описание'),
+                        TextInput::make('pages_printed')
+                            ->label('Пробег аппарата')
+                            ->maxLength(255),
+                        Select::make('status')
+                            ->label('Статус')
+                            ->options(collect(PrinterStatus::cases())->mapWithKeys(fn ($case) => [
+                                $case->name => $case->value // Сохраняет value (AVAILABLE), отображает текст
+                            ]))
+                            ->default(PrinterStatus::AVAILABLE->name),
+                        Forms\Components\Toggle::make('usb')
+                            ->onColor('success')
+                            ->default(true)
+                            ->label('Наличие USB'),
+                        Forms\Components\Toggle::make('duplex')
+                            ->onColor('success')
+                            ->label('Двусторонняя печать'),
+                        Forms\Components\Toggle::make('ethernet')
+                            ->onColor('success')
+                            ->label('Наличие сетегото разъёма'),
+                        Forms\Components\Toggle::make('wifi')
+                            ->onColor('success')
+                            ->label('Наличие wifi'),
+                    ])->columns(2),
             ]);
     }
 

@@ -24,6 +24,7 @@ class Printer extends Model
         'state',
         'status',
         'pages_printed',
+        'usb',
         'ethernet',
         'wifi',
         'duplex',

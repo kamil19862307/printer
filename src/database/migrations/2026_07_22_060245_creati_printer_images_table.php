@@ -19,6 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('image_path')->nullable();
             $table->unsignedTinyInteger('sort')->nullable();
+            $table->boolean('is_main')->default(false);
 
             $table->timestamps();
         });

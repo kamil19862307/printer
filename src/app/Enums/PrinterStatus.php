@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum PrinterStatus: string
 {
-    case AVAILABLE = 'available';
-    case RESERVED = 'reserved';
-    case SOLD = 'sold';
+    case AVAILABLE = 'Доступен';
+    case RESERVED = 'Зарезервирован';
+    case SOLD = 'Продан';
 }

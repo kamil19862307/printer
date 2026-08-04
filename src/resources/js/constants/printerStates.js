@@ -11,11 +11,11 @@ export default {
 
     good: {
         label: 'Хорошее состояние',
-        classes: 'bg-amber-100 text-amber-700',
+        classes: 'bg-sky-100 text-sky-700',
     },
 
     used: {
         label: 'Есть потёртости',
-        classes: 'bg-orange-100 text-orange-700',
+        classes: 'bg-sky-100 text-sky-700',
     },
 }

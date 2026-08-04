@@ -29,8 +29,8 @@ class PrinterResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Основная информация')
-                    ->description('Укажите базовые параметры устройства')
+                Section::make('Обязательная информация')
+                    ->description('Укажите основные параметры устройства')
                     ->schema([
                         Select::make('brand')
                             ->label('Бренд')

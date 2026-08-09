@@ -7,8 +7,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ImagesRelationManager extends RelationManager
 {
@@ -18,9 +16,13 @@ class ImagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('image_path')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('images')
+                    ->label('Фотография')
+                    ->image()
+                    ->multiple()
+                    ->disk('public')
+                    ->directory('printers')
+                    ->required(),
             ]);
     }
 
@@ -28,14 +30,30 @@ class ImagesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('image_path')
+            ->defaultSort('sort')
+            ->reorderable('sort')
             ->columns([
-                Tables\Columns\TextColumn::make('image_path'),
-            ])
-            ->filters([
-                //
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->label('Фото')
+                    ->disk('public'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->label('Добавить фоторгафии')
+                    ->using(function (array $data) {
+                        $printer = $this->getOwnerRecord();
+
+                        foreach ($data['images'] as $imagePath) {
+                            $sort = ($printer->images()->max('sort') ?? -1) + 1;
+
+                            $printer->images()->create([
+                                'image_path' => $imagePath,
+                                'sort' => $sort++,
+                            ]);
+                        }
+
+                        return $printer->images()->latest()->first();
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

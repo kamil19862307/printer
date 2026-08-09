@@ -29,12 +29,17 @@ RUN docker-php-ext-install \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # ===============================
-# 4. Настройка рабочей директории
+# 4. Настройка PHP
+# ===============================
+COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+
+# ===============================
+# 5. Настройка рабочей директории
 # ===============================
 WORKDIR /var/www
 
 # ===============================
-# 5. Пользователь (важно!)
+# 6. Пользователь (важно!)
 # ===============================
 RUN addgroup -g 1000 laravel \
     && adduser -G laravel -g laravel -s /bin/sh -D laravel

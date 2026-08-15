@@ -2,14 +2,20 @@
 
 namespace App\Filament\Resources\PrinterResource\RelationManagers;
 
+//use App\Services\ImageService;
+use App\Services\ImageService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ImagesRelationManager extends RelationManager
 {
+//    public function __construct(protected ImageService $imageService)
+//    {
+//    }
     protected static string $relationship = 'images';
 
     public function form(Form $form): Form
@@ -22,6 +28,9 @@ class ImagesRelationManager extends RelationManager
                     ->multiple()
                     ->disk('public')
                     ->directory('printers')
+                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): string {
+                        return app(ImageService::class)->process($file);
+                    })
                     ->required(),
             ]);
     }
@@ -43,9 +52,9 @@ class ImagesRelationManager extends RelationManager
                     ->using(function (array $data) {
                         $printer = $this->getOwnerRecord();
 
-                        foreach ($data['images'] as $imagePath) {
-                            $sort = ($printer->images()->max('sort') ?? -1) + 1;
+                        $sort = ($printer->images()->max('sort') ?? -1) + 1;
 
+                        foreach ($data['images'] as $imagePath) {
                             $printer->images()->create([
                                 'image_path' => $imagePath,
                                 'sort' => $sort++,

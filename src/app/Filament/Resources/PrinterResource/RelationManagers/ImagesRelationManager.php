@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\PrinterResource\RelationManagers;
 
 //use App\Services\ImageService;
+use App\Models\PrinterImage;
 use App\Services\ImageService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ImagesRelationManager extends RelationManager
@@ -17,6 +19,8 @@ class ImagesRelationManager extends RelationManager
 //    {
 //    }
     protected static string $relationship = 'images';
+
+    protected ?string $oldImagePath = null;
 
     public function form(Form $form): Form
     {
@@ -65,7 +69,27 @@ class ImagesRelationManager extends RelationManager
                     })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->form([
+                        Forms\Components\FileUpload::make('image_path')
+                            ->label('Фотография')
+                            ->image()
+                            ->imageEditor()
+                            ->disk('public')
+                            ->directory('printers'),
+                    ])
+
+                    ->before(function (PrinterImage $record) {
+                        $this->oldImagePath = $record->image_path;
+                    })
+
+                    ->after(function () {
+                        if ($this->oldImagePath) {
+                            Storage::disk('public')->delete($this->oldImagePath);
+
+                            $this->oldImagePath = null;
+                        }
+                    }),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

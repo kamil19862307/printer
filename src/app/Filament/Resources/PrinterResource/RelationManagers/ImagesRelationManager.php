@@ -11,16 +11,18 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Intervention\Image\Exceptions\ImageDecoderException;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use function Symfony\Component\Translation\t;
 
 class ImagesRelationManager extends RelationManager
 {
-//    public function __construct(protected ImageService $imageService)
-//    {
-//    }
     protected static string $relationship = 'images';
 
     protected ?string $oldImagePath = null;
+
+    protected array $justCreatedImages = [];
 
     public function form(Form $form): Form
     {
@@ -33,10 +35,44 @@ class ImagesRelationManager extends RelationManager
                     ->disk('public')
                     ->directory('printers')
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): string {
-                        return app(ImageService::class)->process($file);
+                        try {
+                            $path = app(ImageService::class)->process($file);
+
+                            $this->justCreatedImages[] = $path;
+
+                            return $path;
+                        } catch (ImageDecoderException | \InvalidArgumentException $e) {
+                            $this->rollbackCreatedImages();
+
+                            throw ValidationException::withMessages([
+                                'images' => 'Один из загружаемых файлов поврежден или не является корректным изображением.',
+                            ]);
+
+                        } catch (\Exception $e) {
+                            // На случай других непредвиденных ошибок
+                            $this->rollbackCreatedImages();
+
+                            report($e);
+
+                            throw ValidationException::withMessages([
+                                'images' => 'Произошла ошибка при обработке изображения, попробуйте другой файл',
+                            ]);
+                        }
                     })
                     ->required(),
             ]);
+    }
+
+    /**
+     * Метод для удаления «осиротевших» файлов с диска
+     */
+    protected function rollbackCreatedImages(): void
+    {
+        foreach ($this->justCreatedImages as $image) {
+            Storage::disk('public')->delete($image);
+        }
+
+        $this->justCreatedImages = [];
     }
 
     public function table(Table $table): Table

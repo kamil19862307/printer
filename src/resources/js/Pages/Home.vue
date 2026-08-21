@@ -3,7 +3,12 @@ import MobileLayout from '@/Components/Layout/MobileLayout.vue'
 import TopBar from "@/Components/Layout/TopBar.vue"
 import PrinterCard from "@/Components/Printer/PrinterCard.vue"
 
-import printers from '@/mock/printers'
+defineProps({
+    printers: {
+        type: Array,
+        required: true,
+    },
+})
 
 </script>
 

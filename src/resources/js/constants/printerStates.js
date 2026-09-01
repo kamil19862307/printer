@@ -1,20 +1,25 @@
 export default {
-    new: {
+    'Новый': {
         label: 'Новый',
         classes: 'bg-emerald-100 text-emerald-700',
     },
 
-    like_new: {
+    'Как новый': {
         label: 'Как новый',
         classes: 'bg-sky-100 text-sky-700',
     },
 
-    good: {
+    'Почти как новый': {
+        label: 'Почти как новый',
+        classes: 'bg-sky-100 text-sky-700',
+    },
+
+    'Хорошее состояние': {
         label: 'Хорошее состояние',
         classes: 'bg-sky-100 text-sky-700',
     },
 
-    used: {
+    'Есть потёртости': {
         label: 'Есть потёртости',
         classes: 'bg-sky-100 text-sky-700',
     },

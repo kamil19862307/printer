@@ -1,6 +1,11 @@
 # IDE
 .idea/
 
+#Private
+Roadmap.odt
+ToDoList.odt
+templates
+
 # Laravel
 *.log
 /src/.DS_Store
@@ -17,7 +22,6 @@
 /src/.zed
 /src/auth.json
 /src/node_modules
-/src/public/build
 /src/public/hot
 /src/public/storage
 /src/storage/*.key

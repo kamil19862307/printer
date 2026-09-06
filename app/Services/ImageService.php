@@ -34,6 +34,8 @@ class ImageService
 
         $path = 'printers/' . $filename;
 
+        Storage::disk('public')->makeDirectory('printers');
+
         $destinationPath = Storage::disk('public')->path($path);
 
         $image->save(

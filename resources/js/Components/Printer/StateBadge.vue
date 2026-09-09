@@ -10,7 +10,12 @@ const props = defineProps({
 })
 
 const current = computed(() => {
-    return printerStates[props.state] ?? printerStates.used
+    return (
+        printerStates[props.state] ?? {
+            label: props.state,
+            classes: 'bg-gray-100 text-gray-700',
+        }
+    )
 })
 </script>
 

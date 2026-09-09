@@ -14,8 +14,8 @@ export default {
         classes: 'bg-sky-100 text-sky-700',
     },
 
-    'Хорошее состояние': {
-        label: 'Хорошее состояние',
+    'В хорошем состоянии': {
+        label: 'В хорошем состоянии',
         classes: 'bg-sky-100 text-sky-700',
     },
 

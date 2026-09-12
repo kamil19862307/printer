@@ -3,11 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Enums\PrinterBrands;
-use App\Enums\PrinterState;
 use App\Enums\PrinterStatus;
 use App\Filament\Resources\PrinterResource\Pages;
 use App\Filament\Resources\PrinterResource\RelationManagers\ImagesRelationManager;
 use App\Models\Printer;
+use App\Models\PrinterState;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -55,10 +55,13 @@ class PrinterResource extends Resource
                             ->label('Цена'),
 
                         Select::make('state')
-                            ->label('Состаяние аппарата')
-                            ->options(collect(PrinterState::cases())->mapWithKeys(fn ($case) => [
-                                $case->value => $case->value
-                            ]))
+                            ->label('Состояние аппарата')
+                            ->options(
+                                PrinterState::query()
+                                    ->orderBy('id', 'asc')
+                                    ->pluck('name', 'name')
+                                    ->toArray()
+                            )
                             ->required(),
 
                     ])->columns(2),

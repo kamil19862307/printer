@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\PrinterState;
 use App\Enums\PrinterStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +31,6 @@ class Printer extends Model
     ];
 
     protected $casts = [
-        'state' => PrinterState::class,
         'status' => PrinterStatus::class,
     ];
 

@@ -19,7 +19,7 @@ class HomeController extends Controller
                 'model' => $printer->model,
                 'title' => "{$printer->brand} {$printer->model}",
                 'description' => $printer->description,
-                'state' => $printer->state->value,
+                'state' => $printer->state,
                 'price' => $printer->price,
                 'usb' => $printer->usb,
                 'wifi' => $printer->wifi,

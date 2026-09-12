@@ -19,6 +19,7 @@ class PrinterController extends Controller
             'title' => "{$printer->brand} {$printer->model}",
             'description' => $printer->description,
             'state' => $printer->state,
+            'pages_printed' => $printer->pages_printed,
             'price' => $printer->price,
             'usb' => $printer->usb,
             'wifi' => $printer->wifi,

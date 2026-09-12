@@ -42,8 +42,12 @@ defineProps({
                                 {{ printer.title }}
                             </h2>
 
-                            <div class="mt-4">
+                            <div class="mt-4 flex items-center gap-3">
                                 <StateBadge :state="printer.state" />
+
+                                <span class="text-sm font-medium text-gray-500">
+                                    Пробег: {{ printer.pages_printed }} стр.
+                                </span>
                             </div>
                         </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PrinterResource\Pages;
 
+use App\Events\PrinterNotificationRequested;
 use App\Filament\Resources\PrinterResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,6 +14,14 @@ class EditPrinter extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('notifyManagers')
+                ->label('Рассказать о новинке')
+                ->icon('heroicon-o-envelope')
+                ->color('primary')
+                ->action(function () {
+                    PrinterNotificationRequested::dispatch($this->record);
+                }),
+
             Actions\DeleteAction::make(),
         ];
     }

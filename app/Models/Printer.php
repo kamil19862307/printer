@@ -32,6 +32,7 @@ class Printer extends Model
 
     protected $casts = [
         'status' => PrinterStatus::class,
+        'notified_at' => 'datetime',
     ];
 
     public function images(): HasMany

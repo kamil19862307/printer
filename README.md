@@ -6,10 +6,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+<img width="1500" height="1937" alt="изображение" src="https://github.com/user-attachments/assets/e65de4cc-54cc-4bcd-982c-6ad64e87a3e5" />
 
 ## Printer. 
 
-Сайт по продаже принтеров, что-то вроде доски объявлений, с ценами, возможностью выбора продавца и фильтрами.
+Сайт по продаже принтеров, вроде доски объявлений, с ценами, уведомлениями для менеджеров и фильтрами.
 
 
 ### Установка

@@ -18,7 +18,15 @@ class EditPrinter extends EditRecord
                 ->label('Рассказать о новинке')
                 ->icon('heroicon-o-envelope')
                 ->color('primary')
+                ->disabled(fn (): bool => $this->record->notified_at !== null)
                 ->action(function () {
+
+                    $this->record->refresh();
+
+                    if ($this->record->notified_at !== null) {
+                        return;
+                    }
+
                     PrinterNotificationRequested::dispatch($this->record);
                 }),
 

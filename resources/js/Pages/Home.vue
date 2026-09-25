@@ -8,6 +8,11 @@ defineProps({
         type: Array,
         required: true,
     },
+
+    categories: {
+        type: Array,
+        required: true,
+    },
 })
 
 </script>
@@ -15,7 +20,7 @@ defineProps({
 <template>
     <MobileLayout>
 
-        <TopBar />
+        <TopBar :categories="categories" />
 
         <div class="space-y-6 p-5">
 

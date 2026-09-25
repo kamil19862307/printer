@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('brand', array_column(PrinterBrands::cases(), 'value'));
             $table->string('model');
             $table->string('cartridge'); // CF226A, TN-2375, TK-1170
-            $table->enum('state', array_column(PrinterState::cases(), 'value'));
+            $table->string('state')->nullable();
             $table->unsignedInteger('pages_printed')
                 ->nullable();
             $table->boolean('usb')

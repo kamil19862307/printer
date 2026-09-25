@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PrinterStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +17,7 @@ class Printer extends Model
 
     protected $fillable = [
         'description',
+        'category_id',
         'price',
         'brand',
         'model',
@@ -39,5 +41,10 @@ class Printer extends Model
     {
         return $this->hasMany(PrinterImage::class)
             ->orderBy('sort');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

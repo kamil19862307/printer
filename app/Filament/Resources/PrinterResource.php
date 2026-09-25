@@ -6,6 +6,7 @@ use App\Enums\PrinterBrands;
 use App\Enums\PrinterStatus;
 use App\Filament\Resources\PrinterResource\Pages;
 use App\Filament\Resources\PrinterResource\RelationManagers\ImagesRelationManager;
+use App\Models\Category;
 use App\Models\Printer;
 use App\Models\PrinterState;
 use Filament\Forms;
@@ -36,6 +37,11 @@ class PrinterResource extends Resource
                 Section::make('Обязательная информация')
                     ->description('Укажите основные параметры устройства')
                     ->schema([
+
+                        Select::make('category_id')
+                            ->label('Категория')
+                            ->relationship('category', 'name')
+                            ->required(),
 
                         Select::make('brand')
                             ->label('Бренд')

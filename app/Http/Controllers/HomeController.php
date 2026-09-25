@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Printer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,8 +33,13 @@ class HomeController extends Controller
                     ->values(),
             ]);
 
+        $categories = Category::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
         return Inertia::render('Home', [
             'printers' => $printers,
+            'categories' => $categories,
         ]);
     }
 }

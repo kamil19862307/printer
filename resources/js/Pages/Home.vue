@@ -13,6 +13,11 @@ defineProps({
         type: Array,
         required: true,
     },
+
+    selectedCategory: {
+        type: Number,
+        default: null,
+    },
 })
 
 </script>
@@ -20,7 +25,9 @@ defineProps({
 <template>
     <MobileLayout>
 
-        <TopBar :categories="categories" />
+        <TopBar :categories="categories"
+                :selected-category="selectedCategory"
+        />
 
         <div class="space-y-6 p-5">
 

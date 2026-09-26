@@ -1,4 +1,5 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import {
     Bars3Icon,
@@ -11,14 +12,26 @@ defineProps({
         type: Array,
         required: true,
     },
+
+    selectedCategory: {
+        type: Number,
+        default: null,
+    },
 })
 
 const isMenuOpen = ref(false)
 
-const selectedCategory = ref(null)
-
 const selectCategory = (categoryId) => {
-    selectedCategory.value = categoryId
+    router.get(
+        '/',
+        categoryId
+            ? { category: categoryId }
+            : {},
+        {
+            preserveScroll: true,
+        }
+    )
+
     isMenuOpen.value = false
 }
 </script>

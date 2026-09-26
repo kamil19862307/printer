@@ -9,10 +9,19 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $printers = Printer::query()
-            ->with('images')
+        $categoryId = $request->filled('category')
+            ? $request->integer('category')
+            : null;
+
+        $printersQuery = Printer::query()->with('images');
+
+        if ($categoryId) {
+            $printersQuery->where('category_id', $categoryId);
+        }
+
+        $printers = $printersQuery
             ->get()
             ->map(fn (Printer $printer) => [
                 'id' => $printer->id,
@@ -40,6 +49,7 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'printers' => $printers,
             'categories' => $categories,
+            'selectedCategory' => $categoryId,
         ]);
     }
 }

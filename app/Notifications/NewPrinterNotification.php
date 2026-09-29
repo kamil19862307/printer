@@ -32,7 +32,7 @@ class NewPrinterNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Новый принтер: ' . $this->printer->brand . ' ' . $this->printer->model)
-            ->greeting('Новая новинка! 🖨️')
+            ->greeting('Новая новинка в магазине Шаром Покати! 🖨️')
             ->line('В каталог добавлен новый принтер.')
             ->line('Модель: ' . $this->printer->brand . ' ' . $this->printer->model)
             ->line('Цена: ' . number_format($this->printer->price, 0, ',', ' ') . ' ₽')

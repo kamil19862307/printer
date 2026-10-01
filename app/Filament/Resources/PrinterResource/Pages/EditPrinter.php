@@ -11,6 +11,23 @@ class EditPrinter extends EditRecord
 {
     protected static string $resource = PrinterResource::class;
 
+    protected function allActiveManagersNotified(): bool
+    {
+        $activeManagersCount = $this->record
+            ->managers()
+            ->where('managers.status', 'active')
+            ->count();
+
+        $sentManagersCount = $this->record
+            ->managers()
+            ->where('managers.status', 'active')
+            ->wherePivotNotNull('sent_at')
+            ->count();
+
+        return $activeManagersCount > 0
+            && $activeManagersCount === $sentManagersCount;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -18,12 +35,11 @@ class EditPrinter extends EditRecord
                 ->label('Рассказать о новинке')
                 ->icon('heroicon-o-envelope')
                 ->color('primary')
-                ->disabled(fn (): bool => $this->record->notified_at !== null)
-                ->action(function () {
-
+                ->disabled(fn (): bool => $this->allActiveManagersNotified())
+                ->action(function (): void {
                     $this->record->refresh();
 
-                    if ($this->record->notified_at !== null) {
+                    if ($this->allActiveManagersNotified()) {
                         return;
                     }
 

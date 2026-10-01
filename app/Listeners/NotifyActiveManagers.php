@@ -21,30 +21,40 @@ class NotifyActiveManagers
 
     public function handle(PrinterNotificationRequested $event): void
     {
+        $printer = $event->printer;
+
         $managers = Manager::query()
             ->where('status', '=', 'active')
             ->get();
 
-        $jobs = $managers->map(
-            fn (Manager $manager) => new SendNewPrinterNotification(
+        $jobs = [];
+        foreach ($managers as $manager) {
+            $pivot = $printer->managers()->whereKey($manager->id)->first();
+
+            if ($pivot === null) {
+                $printer->managers()->attach($manager->id);
+                $sentAt = null;
+            } else {
+                $sentAt = $pivot->pivot->sent_at;
+            }
+
+            if ($sentAt !== null) {
+                continue;
+            }
+
+            $jobs[] = new SendNewPrinterNotification(
                 $manager,
-                $event->printer
-            )
-        )->all();
+                $printer,
+            );
 
-        if ($jobs === []) {
-            return;
+            if ($jobs === []){
+                return;
+            }
         }
-
-        $printerId = $event->printer->id;
 
         Bus::batch($jobs)
             ->name('Уведомление о новом принтере')
-            ->then(function (Batch $batch) use ($printerId) {
-                Printer::whereKey($printerId)->update([
-                    'notified_at' => now(),
-                ]);
-            })
             ->dispatch();
+
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
 class Manager extends Model
@@ -13,4 +14,11 @@ class Manager extends Model
         'email',
         'status',
     ];
+
+    public function printers(): BelongsToMany
+    {
+        return $this->belongsToMany(Printer::class, 'printer_manager')
+            ->withPivot('sent_at', 'status')
+            ->withTimestamps();
+    }
 }

@@ -24,5 +24,12 @@ class SendNewPrinterNotification implements ShouldQueue
         $this->manager->notify(
             new NewPrinterNotification($this->printer)
         );
+
+        $this->printer->managers()->updateExistingPivot(
+            $this->manager->id,
+            [
+                'sent_at' => now(),
+            ]
+        );
     }
 }

@@ -6,6 +6,7 @@ use App\Enums\PrinterStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,7 +35,6 @@ class Printer extends Model
 
     protected $casts = [
         'status' => PrinterStatus::class,
-        'notified_at' => 'datetime',
     ];
 
     public function images(): HasMany
@@ -46,5 +46,12 @@ class Printer extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function managers(): BelongsToMany
+    {
+        return $this->belongsToMany(Manager::class, 'printer_manager')
+            ->withPivot('sent_at', 'status')
+            ->withTimestamps();
     }
 }

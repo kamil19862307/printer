@@ -24,7 +24,7 @@ class NotifyActiveManagers
         $printer = $event->printer;
 
         $managers = Manager::query()
-            ->where('status', '=', 'active')
+            ->where('status', '=', true)
             ->get();
 
         $jobs = [];

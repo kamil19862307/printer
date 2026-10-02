@@ -26,17 +26,15 @@ class ManagerResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'active' => 'active',
-                        'inactive' => 'inactive',
-                    ])
-                    ->required()
-                    ->default('active'),
+
+                Forms\Components\Toggle::make('status')
+                    ->label('Активен')
+                    ->default(true),
             ]);
     }
 
@@ -48,8 +46,9 @@ class ManagerResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                Tables\Columns\ToggleColumn::make('status')
+                    ->label('Активен')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

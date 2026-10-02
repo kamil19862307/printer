@@ -15,6 +15,13 @@ class Manager extends Model
         'status',
     ];
 
+    public function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
+    }
+
     public function printers(): BelongsToMany
     {
         return $this->belongsToMany(Printer::class, 'printer_manager')

@@ -17,6 +17,7 @@ defineProps({
         :slides-per-view="1"
         :space-between="0"
         :speed="350"
+        :loop="true"
         class="printer-swiper"
     >
         <SwiperSlide

@@ -1,5 +1,5 @@
 <script setup>
-
+import { ref, computed } from 'vue'
 import MobileLayout from '@/Components/Layout/MobileLayout.vue'
 import PrinterGallery from '@/Components/Printer/PrinterGallery.vue'
 import PrinterFeatures from '@/Components/Printer/PrinterFeatures.vue'
@@ -12,6 +12,26 @@ const props = defineProps({
         required: true,
     },
 })
+
+const activeImageIndex = ref(0)
+
+const activeImage = computed(() => {
+    return props.printer.images[activeImageIndex.value]
+})
+
+const downloadFileName = computed(() => {
+    const brand = props.printer.brand
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+
+    const model = props.printer.model
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+
+    return `${brand}_${model}_${activeImageIndex.value + 1}.webp`
+})
 </script>
 
 <template>
@@ -21,11 +41,11 @@ const props = defineProps({
             :title="props.printer.title"
         />
 
-        <div
-            class="pb-10"
-        >
+        <div class="pb-10">
+
             <PrinterGallery
                 :images="props.printer.images"
+                @update:active-index="activeImageIndex = $event"
             />
 
             <div class="space-y-12 px-10 pb-8 pt-6">
@@ -41,8 +61,8 @@ const props = defineProps({
                             <StateBadge :state="printer.state" />
 
                             <span class="text-sm font-medium text-gray-500">
-                                    Пробег: {{ printer.pages_printed }} стр.
-                                </span>
+                                Пробег: {{ printer.pages_printed }} стр.
+                            </span>
                         </div>
                     </div>
 
@@ -51,12 +71,29 @@ const props = defineProps({
                             {{ props.printer.price }} ₽
                         </div>
 
-<!--                        #TODO сделать возможность бронирования аппрата для аутентифицированных пользователей -->
-<!--                        <button-->
-<!--                            class="mt-5 rounded-xl bg-blue-600 px-5 py-3 text-m font-semibold text-white transition hover:bg-blue-700"-->
-<!--                        >-->
-<!--                            Забронировать-->
-<!--                        </button>-->
+                        <a
+                            v-if="activeImage"
+                            :href="activeImage"
+                            :download="downloadFileName"
+                            class="mt-3 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="h-5 w-5"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 3v12m0 0 4-4m-4 4-4-4m-5 8h18"
+                                />
+                            </svg>
+
+                            Скачать фото
+                        </a>
                     </div>
 
                 </div>
@@ -71,7 +108,7 @@ const props = defineProps({
                     </h2>
 
                     <p class="leading-7 text-gray-600">
-                        {{ props.printer.description}}
+                        {{ props.printer.description }}
                     </p>
                 </div>
 
@@ -80,5 +117,4 @@ const props = defineProps({
         </div>
 
     </MobileLayout>
-
 </template>

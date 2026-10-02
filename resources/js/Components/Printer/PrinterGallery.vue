@@ -8,6 +8,12 @@ defineProps({
         required: true,
     },
 })
+
+const emit = defineEmits(['update:activeIndex'])
+
+const onSlideChange = (swiper) => {
+    emit('update:activeIndex', swiper.realIndex)
+}
 </script>
 
 <template>
@@ -19,6 +25,7 @@ defineProps({
         :speed="350"
         :loop="true"
         class="printer-swiper"
+        @slide-change="onSlideChange"
     >
         <SwiperSlide
             v-for="(image, index) in images"

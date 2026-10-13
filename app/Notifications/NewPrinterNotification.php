@@ -39,6 +39,8 @@ class NewPrinterNotification extends Notification
             ->line('Пробег: ' . $this->printer->pages_printed)
             ->line('Состояние: ' . $this->printer->state)
             ->action('Посмотреть принтер', route('printers.show', $this->printer->id))
+            ->line('Или')
+            ->action('Посмотреть все принтеры', route('home'))
             ->line('Не упустите новинку!');
     }
 

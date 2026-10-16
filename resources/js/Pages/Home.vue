@@ -18,6 +18,16 @@ defineProps({
         type: Number,
         default: null,
     },
+
+    filters: {
+        type: Object,
+        default: () => ({
+            usb: null,
+            ethernet: null,
+            wifi: null,
+            duplex: null,
+        }),
+    },
 })
 
 </script>
@@ -27,6 +37,7 @@ defineProps({
 
         <TopBar :categories="categories"
                 :selected-category="selectedCategory"
+                :filters="filters"
         />
 
         <div class="space-y-6 p-5">

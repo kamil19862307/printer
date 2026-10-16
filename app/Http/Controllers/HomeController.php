@@ -11,15 +11,34 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $categoryId = $request->filled('category')
-            ? $request->integer('category')
+        $validated = $request->validate([
+            'category' => ['sometimes', 'nullable', 'integer', 'min:1'],
+            'usb' => ['sometimes', 'required', 'boolean'],
+            'ethernet' => ['sometimes', 'required', 'boolean'],
+            'wifi' => ['sometimes', 'required', 'boolean'],
+            'duplex' => ['sometimes', 'required', 'boolean'],
+        ]);
+
+        $categoryId = ! empty($validated['category'])
+            ? (int) $validated['category']
             : null;
 
-        $printersQuery = Printer::query()->with('images');
+        $printersQuery = Printer::query()
+            ->with('images');
 
-        if ($categoryId) {
+        if ($categoryId !== null) {
             $printersQuery->where('category_id', $categoryId);
         }
+
+        foreach (['usb', 'ethernet', 'wifi', 'duplex'] as $filter) {
+            if (array_key_exists($filter, $validated)) {
+                $printersQuery->where(
+                    $filter,
+                    filter_var($validated[$filter], FILTER_VALIDATE_BOOLEAN)
+                );
+            }
+        }
+
 
         $printers = $printersQuery
             ->get()
@@ -50,6 +69,20 @@ class HomeController extends Controller
             'printers' => $printers,
             'categories' => $categories,
             'selectedCategory' => $categoryId,
+            'filters' => [
+                'usb' => isset($validated['usb'])
+                    ? (int) filter_var($validated['usb'], FILTER_VALIDATE_BOOLEAN)
+                    : null,
+                'ethernet' => isset($validated['ethernet'])
+                    ? (int) filter_var($validated['ethernet'], FILTER_VALIDATE_BOOLEAN)
+                    : null,
+                'wifi' => isset($validated['wifi'])
+                    ? (int) filter_var($validated['wifi'], FILTER_VALIDATE_BOOLEAN)
+                    : null,
+                'duplex' => isset($validated['duplex'])
+                    ? (int) filter_var($validated['duplex'], FILTER_VALIDATE_BOOLEAN)
+                    : null,
+            ],
         ]);
     }
 }

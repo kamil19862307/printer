@@ -6,6 +6,7 @@ import {
     ChevronDownIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline'
+import PrinterFilters from '@/Components/Printer/PrinterFilters.vue'
 
 defineProps({
     categories: {
@@ -16,6 +17,16 @@ defineProps({
     selectedCategory: {
         type: Number,
         default: null,
+    },
+
+    filters: {
+        type: Object,
+        default: () => ({
+            usb: null,
+            ethernet: null,
+            wifi: null,
+            duplex: null,
+        }),
     },
 })
 
@@ -91,15 +102,20 @@ const selectCategory = (categoryId) => {
                 </button>
             </div>
 
-            <!-- Фильтр — десктоп -->
-            <button
-                class="hidden items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 font-medium transition hover:bg-gray-50 md:flex"
-                @click="isMenuOpen = !isMenuOpen"
-            >
-                <ChevronDownIcon class="h-5 w-5" />
+            <!-- Фильтры — десктоп -->
+            <div class="hidden md:block">
+                <PrinterFilters
+                    :filters="filters"
+                    :selected-category="selectedCategory"
+                />
+            </div>
+        </div>
 
-                Фильтры
-            </button>
+        <div class="border-t border-gray-100 px-5 py-3 md:hidden">
+            <PrinterFilters
+                :filters="filters"
+                :selected-category="selectedCategory"
+            />
         </div>
 
         <!-- Мобильное меню -->
@@ -141,16 +157,6 @@ const selectCategory = (categoryId) => {
                     {{ category.name }}
                 </button>
 
-                <div class="my-2 border-t border-gray-100"></div>
-
-                <button
-                    class="flex items-center justify-between rounded-xl px-4 py-3 text-left font-medium text-gray-900 transition hover:bg-gray-50"
-                    @click="isMenuOpen = false"
-                >
-                    <span>Фильтры</span>
-
-                    <ChevronDownIcon class="h-5 w-5" />
-                </button>
             </div>
         </div>
     </header>

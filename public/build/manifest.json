@@ -1,6 +1,6 @@
 {
-  "_StateBadge-C2aVNPVt.js": {
-    "file": "assets/StateBadge-C2aVNPVt.js",
+  "_StateBadge-DYuuwZkl.js": {
+    "file": "assets/StateBadge-DYuuwZkl.js",
     "name": "StateBadge",
     "imports": [
       "resources/js/app.js"
@@ -42,7 +42,7 @@
     "src": "_instrument-sans-600-normal-B9e8oLYv.woff"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DTxtYOtw.css",
+    "file": "assets/app-CBmyvgVw.css",
     "name": "app",
     "names": [
       "app.css"
@@ -51,30 +51,30 @@
     "isEntry": true
   },
   "resources/js/Pages/Home.vue": {
-    "file": "assets/Home-CMJHZtDg.js",
+    "file": "assets/Home-Bz6zKyly.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_StateBadge-C2aVNPVt.js"
+      "_StateBadge-DYuuwZkl.js"
     ],
     "css": [
-      "assets/Home-BPt5jvCk.css"
+      "assets/Home-BnfKI7N-.css"
     ]
   },
   "resources/js/Pages/Printer/Show.vue": {
-    "file": "assets/Show-BQmmKXzY.js",
+    "file": "assets/Show-DOrcAukp.js",
     "name": "Show",
     "src": "resources/js/Pages/Printer/Show.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_StateBadge-C2aVNPVt.js"
+      "_StateBadge-DYuuwZkl.js"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dgtb--sw.js",
+    "file": "assets/app-BWMi4jLB.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -84,7 +84,7 @@
     ],
     "css": [
       "assets/app-CeYfhhVD.css",
-      "assets/app-DTxtYOtw.css"
+      "assets/app-CBmyvgVw.css"
     ]
   }
 }

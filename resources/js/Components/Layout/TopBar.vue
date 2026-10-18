@@ -8,7 +8,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import PrinterFilters from '@/Components/Printer/PrinterFilters.vue'
 
-defineProps({
+const props = defineProps({
     categories: {
         type: Array,
         required: true,
@@ -33,15 +33,25 @@ defineProps({
 const isMenuOpen = ref(false)
 
 const selectCategory = (categoryId) => {
-    router.get(
-        '/',
-        categoryId
-            ? { category: categoryId }
-            : {},
-        {
-            preserveScroll: true,
+    const params = {}
+
+    // Сохраняем выбранную категорию
+    if (categoryId) {
+        params.category = categoryId
+    }
+
+    // Сохраняем применённые фильтры
+    for (const key of ['usb', 'ethernet', 'wifi', 'duplex']) {
+        const value = props.filters[key]
+
+        if (value !== null && value !== undefined) {
+            params[key] = value
         }
-    )
+    }
+
+    router.get('/', params, {
+        preserveScroll: true,
+    })
 
     isMenuOpen.value = false
 }

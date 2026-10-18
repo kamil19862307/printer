@@ -6,15 +6,15 @@ import {
     FunnelIcon,
 } from '@heroicons/vue/24/outline'
 
+import {
+    printerFilters,
+    defaultPrinterFilters,
+} from '@/Data/printerFilters'
+
 const props = defineProps({
     filters: {
         type: Object,
-        default: () => ({
-            usb: null,
-            ethernet: null,
-            wifi: null,
-            duplex: null,
-        }),
+        default: () => ({ ...defaultPrinterFilters }),
     },
 
     selectedCategory: {
@@ -24,13 +24,6 @@ const props = defineProps({
 })
 
 const isOpen = ref(false)
-
-const options = [
-    { key: 'duplex', label: 'Дуплекс' },
-    { key: 'wifi', label: 'Wi-Fi' },
-    { key: 'ethernet', label: 'Ethernet' },
-    { key: 'usb', label: 'USB' },
-]
 
 const selectedFilters = ref({ ...props.filters })
 
@@ -43,7 +36,7 @@ watch(
 )
 
 const activeFiltersCount = () => {
-    return Object.values(selectedFilters.value)
+    return Object.values(props.filters)
         .filter((value) => value !== null && value !== undefined)
         .length
 }
@@ -55,7 +48,7 @@ const applyFilters = () => {
         params.category = props.selectedCategory
     }
 
-    for (const option of options) {
+    for (const option of printerFilters) {
         const value = selectedFilters.value[option.key]
 
         if (value !== null && value !== undefined) {
@@ -74,12 +67,7 @@ const applyFilters = () => {
 }
 
 const resetFilters = () => {
-    selectedFilters.value = {
-        usb: null,
-        ethernet: null,
-        wifi: null,
-        duplex: null,
-    }
+    selectedFilters.value = { ...defaultPrinterFilters }
 
     applyFilters()
 }
@@ -90,7 +78,12 @@ const resetFilters = () => {
         <!-- Кнопка открытия фильтров -->
         <button
             type="button"
-            class="flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 font-medium text-gray-900 transition hover:bg-gray-50"
+            class="flex items-center gap-2 rounded-xl border px-4 py-2.5 font-medium transition"
+            :class="
+                activeFiltersCount() > 0
+                    ? 'border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100'
+                    : 'border-gray-200 text-gray-900 hover:bg-gray-50'
+            "
             :aria-expanded="isOpen"
             @click="isOpen = !isOpen"
         >
@@ -122,7 +115,7 @@ const resetFilters = () => {
 
             <div class="space-y-4">
                 <label
-                    v-for="option in options"
+                    v-for="option in printerFilters"
                     :key="option.key"
                     class="flex cursor-pointer items-center gap-3"
                 >

@@ -2,6 +2,7 @@
 import MobileLayout from '@/Components/Layout/MobileLayout.vue'
 import TopBar from "@/Components/Layout/TopBar.vue"
 import PrinterCard from "@/Components/Printer/PrinterCard.vue"
+import EmptyPrinterResults from '@/Components/Printer/EmptyPrinterResults.vue'
 
 defineProps({
     printers: {
@@ -40,15 +41,19 @@ defineProps({
                 :filters="filters"
         />
 
-        <div class="space-y-6 p-5">
-
+        <div v-if="printers.length">
             <PrinterCard
                 v-for="printer in printers"
                 :key="printer.id"
                 :printer="printer"
             />
-
         </div>
+
+        <EmptyPrinterResults
+            v-else
+            :filters="filters"
+            :selected-category="selectedCategory"
+        />
 
     </MobileLayout>
 </template>

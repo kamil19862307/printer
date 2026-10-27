@@ -128,10 +128,10 @@ const selectCategory = (categoryId) => {
             />
         </div>
 
-        <!-- Мобильное меню -->
+        <!-- Меню навигации -->
         <div
             v-if="isMenuOpen"
-            class="border-t border-gray-100 bg-white px-5 py-4 md:hidden"
+            class="border-t border-gray-100 bg-white px-5 py-4"
         >
             <div class="flex flex-col gap-2">
 
@@ -166,6 +166,17 @@ const selectCategory = (categoryId) => {
                 >
                     {{ category.name }}
                 </button>
+
+                <!-- Разделитель -->
+                <div class="my-2 border-t border-gray-100"></div>
+
+                <!-- Загрузки -->
+                <a
+                    href="/download"
+                    class="flex items-center rounded-xl px-4 py-3 font-medium text-gray-900 transition hover:bg-gray-50"
+                >
+                    Загрузки
+                </a>
 
             </div>
         </div>

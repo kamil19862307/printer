@@ -30,6 +30,13 @@ return [
 
     'disks' => [
 
+        'downloads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/downloads'),
+            'visibility' => 'private',
+            'throw' => true,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

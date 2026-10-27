@@ -1,0 +1,1 @@
+import{C as e,b as t,s as n,u as r}from"./app--EPqRXz0.js";var i=(e,t)=>{let n=e.__vccOpts||e;for(let[e,r]of t)n[e]=r;return n},a={},o={class:`min-h-screen bg-slate-100 flex justify-center`},s={class:`w-full max-w-[750px] bg-white min-h-screen shadow-xl`};function c(i,a){return t(),r(`main`,o,[n(`div`,s,[e(i.$slots,`default`)])])}var l=i(a,[[`render`,c]]);export{i as n,l as t};

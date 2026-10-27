@@ -24,6 +24,7 @@ class HomeController extends Controller
             : null;
 
         $printersQuery = Printer::query()
+            ->where('status', '=', 'доступен')
             ->with('images');
 
         if ($categoryId !== null) {
